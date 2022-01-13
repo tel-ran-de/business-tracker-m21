@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -37,13 +36,6 @@ public class MemberController {
         return ResponseEntity
                 .created(new URI("/api/members/" + member.getId()))
                 .body(memberDto);
-    }
-
-    @Hidden
-    @PutMapping("")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateMember(@RequestBody @Valid MemberDto memberDto) throws HttpClientErrorException.BadRequest {
-        memberService.edit(memberDto.id, memberDto.position);
     }
 
     @Operation(summary = "get list of members by project id")

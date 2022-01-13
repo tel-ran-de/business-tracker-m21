@@ -38,7 +38,7 @@ class MilestoneServiceTest {
 
     @Test
     public void testAdd_success() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 
@@ -60,7 +60,7 @@ class MilestoneServiceTest {
 
     @Test
     public void testAdd_roadmapDoesNotExist_EntityNotFoundException() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 
@@ -77,7 +77,7 @@ class MilestoneServiceTest {
     @Test
     public void milestoneEdit_milestoneExist_fieldsChanged() {
 
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 
@@ -101,7 +101,7 @@ class MilestoneServiceTest {
 
     @Test
     void testGetById_objectExist() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 
@@ -121,7 +121,7 @@ class MilestoneServiceTest {
 
     @Test
     void testGetById_objectNotExist() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 
@@ -139,7 +139,7 @@ class MilestoneServiceTest {
 
     @Test
     void removeById_oneObjectDeleted() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 

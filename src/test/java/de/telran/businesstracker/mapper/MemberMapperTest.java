@@ -21,9 +21,9 @@ public class MemberMapperTest {
 
     @BeforeEach
     public void beforeEachTest() {
-        User user = new User(1L);
+        User user = new User(1L, "Ivan", "Petrov", "Boss", "img-url");
         Project project = new Project(1L, "Some project", user);
-        member = new Member(1L, "img-url", "Ivan", "Petrov", "Boss", project, user);
+        member = new Member(1L, project, user);
     }
 
     @Test
@@ -31,10 +31,10 @@ public class MemberMapperTest {
         MemberDto memberDto = memberMapper.toDto(member);
 
         assertEquals(member.getId(), memberDto.id);
-        assertEquals(member.getLastName(), memberDto.lastName);
-        assertEquals(member.getName(), memberDto.name);
-        assertEquals(member.getPosition(), memberDto.position);
-        assertEquals(member.getImg(), memberDto.img);
+        assertEquals(member.getUser().getLastName(), memberDto.lastName);
+        assertEquals(member.getUser().getName(), memberDto.name);
+        assertEquals(member.getUser().getPosition(), memberDto.position);
+        assertEquals(member.getUser().getImg(), memberDto.img);
         assertEquals(member.getProject().getId(), memberDto.projectId);
         assertEquals(member.getUser().getId(), memberDto.userId);
         assertEquals(7, MemberDto.class.getFields().length);

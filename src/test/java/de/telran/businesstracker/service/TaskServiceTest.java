@@ -46,10 +46,10 @@ class TaskServiceTest {
 
     @BeforeEach
     public void beforeEachTest() {
-        User user = new User(1L);
+        User user = new User("Ivan", "Petrov", "Boss", "img-url");
         project = new Project(1L, "Some project", user);
         Roadmap roadmap = new Roadmap();
-        member = new Member(1L, "img-url", "Ivan", "Petrov", "Boss", project, user);
+        member = new Member(1L, project, user);
         milestone = new Milestone(3L, "Milestone", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
         task = new Task(2L, "Task", false, false, "Document", milestone, new ArrayList<>(), member);
     }

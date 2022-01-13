@@ -38,7 +38,7 @@ public class KpiServiceTest {
 
     @Test
     public void testAdd_success() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
         Milestone milestone = new Milestone(1L, "Milestone", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
@@ -52,7 +52,7 @@ public class KpiServiceTest {
 
     @Test
     public void testAdd_roadmapDoesNotExist_EntityNotFoundException() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap", LocalDate.now(), project);
 
@@ -67,7 +67,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpisByProject_twoRoadMapsWithEachOneMileStones_sixElementFound() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap1 = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone1 = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap1, new ArrayList<>());
@@ -99,7 +99,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpisByProject_oneRoadMapWithTreeMileStones_sevenElementFound() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone1 = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
@@ -135,7 +135,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpisByProject_oneRoadMapWithTwoMileStones_noKpiExist_emptyList() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap1 = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone1 = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap1, new ArrayList<>());
@@ -153,7 +153,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpiByMileStone_fourElementFound() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
@@ -171,7 +171,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpiByBMileStone_emptyList() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
@@ -186,7 +186,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpiByRoadMap_oneProjectOneRoadMapsTreeMileStoneOnEachRoadMap_fourElementFound() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
 
@@ -214,7 +214,7 @@ public class KpiServiceTest {
 
     @Test
     public void testGetAllKpiByRoadMap_emptyList() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
 
@@ -227,7 +227,7 @@ public class KpiServiceTest {
 
     @Test
     public void testRemoveKpi_kpiRemoved() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
@@ -253,7 +253,7 @@ public class KpiServiceTest {
 
     @Test
     public void testRemoveKpi_kpiNotExist_EntityNotFoundException() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
         Roadmap roadmap = new Roadmap(3L, "Roadmap_01", LocalDate.now(), project);
         Milestone milestone = new Milestone(1L, "Milestone_01", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());

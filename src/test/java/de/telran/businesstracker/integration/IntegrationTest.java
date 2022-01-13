@@ -28,18 +28,20 @@ class IntegrationTest {
     public void integrationTestTask() {
         User user = new User();
         userRepository.save(user);
-        Project project = Project.builder().build();
-        Roadmap roadmap = Roadmap.builder().build();
-        projectRepository.save(project);
-        roadmapRepository.save(roadmap);
-        // Member member = new Member(1L, "Boss", project, user);
-        Member member = Member.builder().build();
-        memberRepository.save(member);
-        Milestone milestone = new Milestone();
-        // Milestone milestone = new Milestone(2L, "Milestone", LocalDate.now(), LocalDate.now().plusDays(3), roadmap);
-        milestoneRepository.save(milestone);
-        Task task = taskService.add("Task1", false, false, "Document", milestone.getId(), member.getId());
 
+        Project project = new Project();
+        projectRepository.save(project);
+
+        Roadmap roadmap = Roadmap.builder().build();
+        roadmapRepository.save(roadmap);
+
+        Member member = new Member();
+        memberRepository.save(member);
+
+        Milestone milestone = new Milestone();
+        milestoneRepository.save(milestone);
+
+        Task task = taskService.add("Task1", false, false, "Document", milestone.getId(), member.getId());
         Assertions.assertEquals("Task1", task.getName());
         Assertions.assertEquals(false, task.isFinished());
         Assertions.assertEquals(milestone.getId(), task.getMilestone().getId());
@@ -61,6 +63,5 @@ class IntegrationTest {
         roadmapRepository.delete(roadmap);
         projectRepository.delete(project);
         userRepository.delete(user);
-
     }
 }

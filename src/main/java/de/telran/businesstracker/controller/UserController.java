@@ -1,24 +1,16 @@
 package de.telran.businesstracker.controller;
 
-import de.telran.businesstracker.model.User;
 import de.telran.businesstracker.controller.dto.UserDto;
 import de.telran.businesstracker.mapper.UserMapper;
+import de.telran.businesstracker.model.User;
 import de.telran.businesstracker.service.UserService;
 import io.swagger.v3.oas.annotations.Hidden;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Hidden
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -32,16 +24,13 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) throws URISyntaxException {
-        User user = userService.add();
-        userDto.id = user.getId();
-        return ResponseEntity
-                .created(new URI("/api/users/" + user.getId()))
-                .body(userDto);
+    public UserDto createUser(@RequestBody @Valid UserDto userDto) {
+        User user = userService.add(userDto.name, userDto.lastName, userDto.position, userDto.img);
+        return userMapper.toDto(user);
     }
 
     @GetMapping("")
-    public List<UserDto> getAllTasks() {
+    public List<UserDto> getAllUsers() {
         return userService.getAll()
                 .stream()
                 .map(userMapper::toDto)

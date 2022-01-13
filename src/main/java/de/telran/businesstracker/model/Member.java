@@ -1,31 +1,30 @@
 package de.telran.businesstracker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String img;
-    private String name;
-    private String lastName;
-    private String position;
+    @ManyToOne
+    @Setter
+    private Project project;
 
     @ManyToOne
-    private Project project;
-    @ManyToOne
+    @Setter
     private User user;
+
+    public Member(Project project, User user) {
+        this.project = project;
+        this.user = user;
+    }
 }

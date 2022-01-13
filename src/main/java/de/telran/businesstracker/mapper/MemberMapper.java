@@ -11,9 +11,9 @@ public class MemberMapper {
         return new MemberDto(member.getId(),
                 member.getProject().getId(),
                 member.getUser().getId(),
-                member.getImg(),
-                member.getName(),
-                member.getLastName(),
-                member.getPosition());
+                member.getUser().getImg(),
+                member.getUser().getName(),
+                member.getUser().getLastName(),
+                member.getUser().getPosition());
     }
 }

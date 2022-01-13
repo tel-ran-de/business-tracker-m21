@@ -40,13 +40,15 @@ class MemberServiceTest {
 
     private Project project;
     private User user;
+    private User user2;
     private Member member;
 
     @BeforeEach
     public void beforeEachTest() {
-        user = new User(1L);
+        user = new User(1L, "Ivan", "Petrov", "Boss", "img-url");
+        user2 = new User(1L, "Vasja", "Pupkin", "Dev", "img-url");
         project = new Project(1L, "Some project", user);
-        member = new Member(1L, "img-url", "Ivan", "Petrov", "Boss", project, user);
+        member = new Member(1L, project, user);
     }
 
     @Test
@@ -54,11 +56,11 @@ class MemberServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        memberService.add(member.getPosition(), member.getProject().getId(), member.getUser().getId());
+        memberService.add(member.getUser().getPosition(), member.getProject().getId(), member.getUser().getId());
 
         verify(memberRepository, times(1)).save(any());
         verify(memberRepository, times(1)).save(argThat(savedMember ->
-                savedMember.getPosition().equals(member.getPosition()) &&
+                savedMember.getUser().getPosition().equals(member.getUser().getPosition()) &&
                         savedMember.getProject().getId().equals(project.getId()) &&
                         savedMember.getUser().getId().equals(user.getId()))
         );
@@ -67,32 +69,19 @@ class MemberServiceTest {
     @Test
     public void testAdd_projectDoesNotExist_EntityNotFoundException() {
         Exception exception = assertThrows(EntityNotFoundException.class, () ->
-                memberService.add(member.getPosition(), member.getProject().getId() + 100, member.getUser().getId()));
+                memberService.add(member.getUser().getPosition(), member.getProject().getId() + 100, member.getUser().getId()));
 
         verify(projectRepository, times(1)).findById(any());
         assertEquals("Error! This project doesn't exist in our DB", exception.getMessage());
     }
 
-    @Test
-    public void memberEdit_memberExist_fieldsChanged() {
-        String newPosition = "Senior";
-
-        when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
-        memberService.edit(member.getId(), newPosition);
-
-        verify(memberRepository, times(1)).save(any());
-        verify(memberRepository, times(1)).save(argThat(savedMember -> savedMember.getPosition().equals(newPosition) &&
-                savedMember.getProject().getId().equals(project.getId()) &&
-                savedMember.getUser().getId().equals(user.getId()))
-        );
-    }
 
     @Test
     void testGetById_objectExist() {
         when(memberRepository.findById(member.getId())).thenReturn(Optional.of(member));
         Member expectedMember = memberService.getById(member.getId());
 
-        assertEquals(expectedMember.getPosition(), member.getPosition());
+        assertEquals(expectedMember.getUser().getPosition(), member.getUser().getPosition());
         assertEquals(expectedMember.getProject(), member.getProject());
         assertEquals(expectedMember.getUser(), member.getUser());
 
@@ -111,11 +100,11 @@ class MemberServiceTest {
     }
 
     @Test
-    void testGetMembersByProjectId_fourUsersFound() {
+    void testGetMembersByProjectId_3Found() {
         List<Member> members = Arrays.asList(
                 member,
-                new Member(2L, "img", "Vasja", "Pupkin", "CTO", project, user),
-                new Member(3L, "img", "Max", "Schulz", "Dev", project, user)
+                new Member(2L, project, user),
+                new Member(3L, project, user2)
         );
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         when(memberRepository.findAllByProject(project)).thenReturn(members);
@@ -129,14 +118,14 @@ class MemberServiceTest {
         assertTrue(membersResult.contains(member));
 
         assertEquals(2L, membersResult.get(1).getId());
-        assertEquals("Vasja", membersResult.get(1).getName());
-        assertEquals("Pupkin", membersResult.get(1).getLastName());
-        assertEquals("CTO", membersResult.get(1).getPosition());
+        assertEquals(user.getName(), membersResult.get(1).getUser().getName());
+        assertEquals(user.getLastName(), membersResult.get(1).getUser().getLastName());
+        assertEquals(user.getPosition(), membersResult.get(1).getUser().getPosition());
 
         assertEquals(3L, membersResult.get(2).getId());
-        assertEquals("Max", membersResult.get(2).getName());
-        assertEquals("Schulz", membersResult.get(2).getLastName());
-        assertEquals("Dev", membersResult.get(2).getPosition());
+        assertEquals(user2.getName(), membersResult.get(2).getUser().getName());
+        assertEquals(user2.getLastName(), membersResult.get(2).getUser().getLastName());
+        assertEquals(user2.getPosition(), membersResult.get(2).getUser().getPosition());
     }
 
     @Captor
@@ -147,7 +136,7 @@ class MemberServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        memberService.add(member.getPosition(), member.getProject().getId(), member.getUser().getId());
+        memberService.add(member.getUser().getPosition(), member.getProject().getId(), member.getUser().getId());
         memberService.removeById(member.getId());
 
         List<Member> capturedMembers = taskArgumentCaptor.getAllValues();
