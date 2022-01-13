@@ -1,19 +1,16 @@
 package de.telran.businesstracker.controller;
 
-import de.telran.businesstracker.controller.dto.ProjectDto;
+import de.telran.businesstracker.controller.dto.ProjectToADdDto;
+import de.telran.businesstracker.controller.dto.ProjectToDisplayDto;
 import de.telran.businesstracker.mapper.ProjectMapper;
 import de.telran.businesstracker.model.Project;
 import de.telran.businesstracker.service.ProjectService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,26 +26,23 @@ public class ProjectController {
         this.projectMapper = projectMapper;
     }
 
-    @Hidden
     @PostMapping("")
-    public ResponseEntity<ProjectDto> createProject(@RequestBody @Valid ProjectDto projectDto) throws URISyntaxException {
-        Project project = projectService.add(projectDto.name, projectDto.userId);
-        projectDto.id = project.getId();
-        return ResponseEntity
-                .created(new URI("/api/projects/" + project.getId()))
-                .body(projectDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProjectToDisplayDto createProject(@RequestBody @Valid ProjectToADdDto projectDto) {
+        Project project = projectService.add(projectDto.name, projectDto.userIds);
+        return projectMapper.toDto(project);
     }
 
     @Hidden
     @PutMapping("")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProject(@RequestBody @Valid ProjectDto projectDto) throws HttpClientErrorException.BadRequest {
-        projectService.edit(projectDto.id, projectDto.name);
+    public void updateProject(@RequestBody @Valid ProjectToDisplayDto projectToDisplayDto) {
+        projectService.edit(projectToDisplayDto.id, projectToDisplayDto.name);
     }
 
-    @Hidden
+    @Operation(summary = "get list of all projects")
     @GetMapping("")
-    public List<ProjectDto> getAllProjects() {
+    public List<ProjectToDisplayDto> getAllProjects() {
         return projectService.getAll()
                 .stream()
                 .map(projectMapper::toDto)
@@ -57,15 +51,15 @@ public class ProjectController {
 
     @Operation(summary = "get project by id")
     @GetMapping("/{id}")
-    public ProjectDto getProject(@PathVariable Long id) {
+    public ProjectToDisplayDto getProjectById(@PathVariable Long id) {
         Project project = projectService.getById(id);
         return projectMapper.toDto(project);
     }
 
-    @Hidden
+    @Operation(summary = "delete project by id")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProject(@PathVariable Long id) {
+    public void deleteProjectById(@PathVariable Long id) {
         projectService.removeById(id);
     }
 }

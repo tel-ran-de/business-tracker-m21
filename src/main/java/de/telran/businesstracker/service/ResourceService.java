@@ -30,7 +30,7 @@ public class ResourceService {
 
     public Resource add(String name, Integer hours, Double cost, Long taskId) {
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException(TASK_DOES_NOT_EXIST));
-        Resource resource = Resource.builder().name(name).hours(hours).cost(cost).task(task).build();
+        Resource resource = new Resource(name, hours, cost, task);
         resourceRepository.save(resource);
         return resource;
     }

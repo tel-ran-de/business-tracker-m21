@@ -17,8 +17,7 @@ import java.util.List;
 public class Milestone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -28,9 +27,11 @@ public class Milestone {
     @Setter
     private LocalDate finishDate;
 
+    @Setter
     @ManyToOne
     private Roadmap roadmap;
 
+    @Setter
     @ElementCollection
     private List<String> kpis = new ArrayList<>();
 
@@ -38,6 +39,12 @@ public class Milestone {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.roadmap = roadmap;
+        this.kpis = kpis;
+    }
+
+    public Milestone(String name, Roadmap roadmap, List<String> kpis) {
+        this.name = name;
         this.roadmap = roadmap;
         this.kpis = kpis;
     }
