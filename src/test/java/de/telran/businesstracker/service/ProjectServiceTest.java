@@ -4,6 +4,7 @@ import de.telran.businesstracker.model.Project;
 import de.telran.businesstracker.model.User;
 import de.telran.businesstracker.repositories.ProjectRepository;
 import de.telran.businesstracker.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,9 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProjectServiceTest {
@@ -37,15 +36,21 @@ class ProjectServiceTest {
     @InjectMocks
     ProjectService projectService;
 
+    private User user;
+
+    @BeforeEach
+    public void beforeEachTest() {
+        user = User.builder().id(1L).build();
+    }
+
     @Test
     public void testAdd_success() {
 
-        User user = new User(2L);
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
         Project project = Project.builder()
                 .id(1L)
-                .name("Great project")
+                .name("new project")
                 .user(user)
                 .build();
 
@@ -60,11 +65,9 @@ class ProjectServiceTest {
 
     @Test
     public void testAdd_userDoesNotExist_EntityNotFoundException() {
-        User user = new User(2L);
-
         Project project = Project.builder()
                 .id(1L)
-                .name("Great project")
+                .name("new project")
                 .user(user)
                 .build();
 
@@ -80,8 +83,8 @@ class ProjectServiceTest {
 
         Project project = Project.builder()
                 .id(1L)
-                .name("Great project")
-                .user(new User(2L))
+                .name("new project")
+                .user(user)
                 .build();
 
         String newName = "Small project";
@@ -90,20 +93,18 @@ class ProjectServiceTest {
 
         projectService.edit(project.getId(), newName);
 
-        verify(projectRepository, times(1)).save(any());
         verify(projectRepository, times(1))
                 .save(argThat(savedProject -> savedProject.getName().equals(newName) &&
-                        savedProject.getUser().getId() == 2)
+                        savedProject.getUser().getId() == 1)
                 );
     }
 
     @Test
     void getAll_twoObjects() {
-        User user = new User(2L);
 
         Project project1 = Project.builder()
                 .id(1L)
-                .name("Great project")
+                .name("new project")
                 .user(user)
                 .build();
 
@@ -129,8 +130,6 @@ class ProjectServiceTest {
 
     @Test
     void testGetById_objectExist() {
-        User user = new User(2L);
-
         Project project = Project.builder()
                 .id(1L)
                 .name("Small project")
@@ -149,8 +148,6 @@ class ProjectServiceTest {
 
     @Test
     void testGetById_objectNotExist() {
-        User user = new User(2L);
-
         Project project = Project.builder()
                 .id(1L)
                 .name("Small project")
@@ -170,8 +167,6 @@ class ProjectServiceTest {
 
     @Test
     void removeById_oneObjectDeleted() {
-        User user = new User(2L);
-
         Project project = Project.builder()
                 .id(1L)
                 .name("Small project")

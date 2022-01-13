@@ -23,10 +23,11 @@ public class TaskMapperTest {
 
     @BeforeEach
     public void beforeEachTest() {
-        User user = new User();
+        User user = new User(1L, "Ivan", "Petrov", "Boss", "img-url");
+
         Project project = new Project();
         Roadmap roadmap = new Roadmap();
-        Member member = new Member(1L, "img-url", "Ivan", "Petrov", "Boss", project, user);
+        Member member = new Member(1L, project, user);
         Milestone milestone = new Milestone(3L, "Milestone", LocalDate.now(), LocalDate.now().plusDays(10), roadmap, new ArrayList<>());
         task = new Task(2L, "Task", false, false, "Document", milestone, new ArrayList<>(), member);
     }

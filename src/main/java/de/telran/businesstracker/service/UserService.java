@@ -16,15 +16,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User add() {
-        User user = User.builder().build();
-        userRepository.save(user);
-        return user;
+    public User add(String name, String lastName, String position, String img) {
+        User user = new User(name, lastName, position, img);
+        return userRepository.save(user);
     }
 
     public List<User> getAll() {
         return new ArrayList<>(userRepository.findAll());
     }
-
 }
-

@@ -36,7 +36,7 @@ class RoadmapServiceTest {
 
     @Test
     public void testAdd_success() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
 
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
@@ -60,7 +60,7 @@ class RoadmapServiceTest {
 
     @Test
     public void testAdd_projectDoesNotExist_EntityNotFoundException() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
 
         Roadmap roadmap = Roadmap.builder()
@@ -80,7 +80,7 @@ class RoadmapServiceTest {
     @Test
     public void roadmapEdit_roadmapExist_fieldsChanged() {
 
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
 
         Roadmap roadmap = Roadmap.builder()
@@ -106,7 +106,7 @@ class RoadmapServiceTest {
 
     @Test
     void testGetById_objectExist() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
 
         Roadmap roadmap = Roadmap.builder()
@@ -129,7 +129,7 @@ class RoadmapServiceTest {
 
     @Test
     void testGetById_objectNotExist() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
 
         Roadmap roadmap = Roadmap.builder()
@@ -152,7 +152,7 @@ class RoadmapServiceTest {
 
     @Test
     void removeById_oneObjectDeleted() {
-        User user = new User(2L);
+        User user = new User();
         Project project = new Project(4L, "Great project", user);
 
         Roadmap roadmap = Roadmap.builder()

@@ -48,19 +48,19 @@ public class IMemberRepositoryTest {
         List<Member> members = Arrays.asList(
                 Member.builder()
                         .project(project)
-                        .name("Ivan").lastName("Ivanov").position("Boss").img("img_01").user(user)
+                        .user(user)
                         .build(),
                 Member.builder()
                         .project(project)
-                        .name("Max").lastName("Schulz").position("Dev").img("img_02").user(user)
+                        .user(user)
                         .build(),
                 Member.builder()
                         .project(project)
-                        .name("John").lastName("Doe").position("CTO").img("img_03").user(user)
+                        .user(user)
                         .build(),
                 Member.builder()
                         .project(project)
-                        .name("Muhamed").lastName("Petrov").position("QA").img("img_04")
+                        .user(user)
                         .build()
         );
 
@@ -72,10 +72,10 @@ public class IMemberRepositoryTest {
         List<Member> foundMembers = memberRepository.findAllByProject(project);
         assertEquals(4, foundMembers.size());
 
-        assertEquals(members.get(0).getName(), foundMembers.get(0).getName());
-        assertEquals(members.get(1).getName(), foundMembers.get(1).getName());
-        assertEquals(members.get(2).getName(), foundMembers.get(2).getName());
-        assertEquals(members.get(3).getName(), foundMembers.get(3).getName());
+        assertEquals(members.get(0).getUser().getName(), foundMembers.get(0).getUser().getName());
+        assertEquals(members.get(1).getUser().getName(), foundMembers.get(1).getUser().getName());
+        assertEquals(members.get(2).getUser().getName(), foundMembers.get(2).getUser().getName());
+        assertEquals(members.get(3).getUser().getName(), foundMembers.get(3).getUser().getName());
     }
 
     @Test
@@ -103,19 +103,19 @@ public class IMemberRepositoryTest {
         List<Member> members = Arrays.asList(
                 Member.builder()
                         .project(project)
-                        .name("Ivan").lastName("Ivanov").position("Boss").img("img_01").user(user2)
+                        .user(user2)
                         .build(),
                 Member.builder()
                         .project(project)
-                        .name("Max").lastName("Schulz").position("Dev").img("img_02").user(user)
+                        .user(user)
                         .build(),
                 Member.builder()
                         .project(project2)
-                        .name("John").lastName("Doe").position("CTO").img("img_03").user(user)
+                        .user(user)
                         .build(),
                 Member.builder()
                         .project(project2)
-                        .name("Muhamed").lastName("Petrov").position("QA").img("img_04").user(user2)
+                        .user(user2)
                         .build()
         );
 
@@ -127,8 +127,8 @@ public class IMemberRepositoryTest {
         List<Member> foundMembers = memberRepository.findAllByProject(project);
         assertEquals(2, foundMembers.size());
 
-        assertEquals(members.get(0).getName(), foundMembers.get(0).getName());
-        assertEquals(members.get(1).getName(), foundMembers.get(1).getName());
+        assertEquals(members.get(0).getUser().getName(), foundMembers.get(0).getUser().getName());
+        assertEquals(members.get(1).getUser().getName(), foundMembers.get(1).getUser().getName());
     }
 
     @Test
@@ -154,7 +154,7 @@ public class IMemberRepositoryTest {
 
         Member member = Member.builder()
                 .project(project2)
-                .name("Ivan").lastName("Ivanov").position("Boss").img("img_01").user(user2)
+                .user(user2)
                 .build();
 
         entityManager.persist(member);
