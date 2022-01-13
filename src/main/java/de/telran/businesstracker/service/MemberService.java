@@ -28,12 +28,12 @@ public class MemberService {
         this.userRepository = userRepository;
     }
 
-    public Member add(String position, Long projectId, Long userId) {
+    public Member add(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(PROJECT_DOES_NOT_EXIST));
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(USER_DOES_NOT_EXIST));
-        Member member = Member.builder().project(project).user(user).build();
-        memberRepository.save(member);
-        return member;
+        Member member = new Member(project, user);
+        return memberRepository.save(member);
+
     }
 
     public List<Member> getAllByProjectId(long projectId) {

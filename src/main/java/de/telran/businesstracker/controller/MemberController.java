@@ -7,12 +7,9 @@ import de.telran.businesstracker.service.MemberService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,14 +25,11 @@ public class MemberController {
         this.memberMapper = memberMapper;
     }
 
-    @Hidden
     @PostMapping("")
-    public ResponseEntity<MemberDto> createMember(@RequestBody @Valid MemberDto memberDto) throws URISyntaxException {
-        Member member = memberService.add(memberDto.position, memberDto.projectId, memberDto.userId);
-        memberDto.id = member.getId();
-        return ResponseEntity
-                .created(new URI("/api/members/" + member.getId()))
-                .body(memberDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    public MemberDto addMember(@RequestBody @Valid MemberDto memberDto) {
+        Member member = memberService.add(memberDto.projectId, memberDto.userId);
+        return memberMapper.toDto(member);
     }
 
     @Operation(summary = "get list of members by project id")

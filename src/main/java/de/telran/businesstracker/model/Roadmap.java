@@ -1,35 +1,38 @@
 package de.telran.businesstracker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Roadmap {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     private String name;
-
+    @Setter
     private LocalDate startDate;
 
     @ManyToOne
     private Project project;
+
+    public Roadmap(String name, LocalDate startDate, Project project) {
+        this.name = name;
+        this.startDate = startDate;
+        this.project = project;
+    }
+
+    public Roadmap(String name, Project project) {
+        this.name = name;
+        this.project = project;
+    }
 }

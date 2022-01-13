@@ -1,12 +1,11 @@
 package de.telran.businesstracker.service;
 
-import de.telran.businesstracker.model.Project;
-import de.telran.businesstracker.model.User;
-import de.telran.businesstracker.repositories.ProjectRepository;
-import de.telran.businesstracker.repositories.UserRepository;
+import de.telran.businesstracker.model.*;
+import de.telran.businesstracker.repositories.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +17,43 @@ public class ProjectService {
 
     final ProjectRepository projectRepository;
     final UserRepository userRepository;
+    final MemberRepository memberRepository;
+    final RoadmapRepository roadmapRepository;
+    final MilestoneRepository milestoneRepository;
 
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, MemberRepository memberRepository, RoadmapRepository roadmapRepository, MilestoneRepository milestoneRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.memberRepository = memberRepository;
+        this.roadmapRepository = roadmapRepository;
+        this.milestoneRepository = milestoneRepository;
     }
 
-    public Project add(String name, Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(USER_DOES_NOT_EXIST));
-        Project project = Project.builder().name(name).user(user).build();
-        projectRepository.save(project);
+    public Project add(String name, List<Long> userIds) {
+
+        User user = userRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(USER_DOES_NOT_EXIST));
+        Project project = projectRepository.save(new Project(name, user));
+
+        List<Member> memberList = new ArrayList<>();
+        memberList.add(new Member(project, user));
+
+        if (userIds != null)
+            for (Long userId : userIds) {
+                if (userId > 0)
+                    memberList.add(
+                            new Member(project, userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(USER_DOES_NOT_EXIST)))
+                    );
+            }
+
+        memberRepository.saveAll(memberList);
+
+        Roadmap roadmap = roadmapRepository.save(new Roadmap("Roadmap", LocalDate.now(), project));
+        List<Milestone> milestones = List.of(
+                new Milestone("Research", roadmap, new ArrayList<>()),
+                new Milestone("Prototyping", roadmap, new ArrayList<>()),
+                new Milestone("Market-fit", roadmap, new ArrayList<>())
+        );
+        milestoneRepository.saveAll(milestones);
         return project;
     }
 
@@ -46,7 +72,8 @@ public class ProjectService {
     }
 
     public void removeById(Long id) {
-        projectRepository.deleteById(id);
+        Project project = getById(id);
+        projectRepository.delete(project);
     }
 }
 

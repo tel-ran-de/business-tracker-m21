@@ -2,13 +2,10 @@ package de.telran.businesstracker.service;
 
 import de.telran.businesstracker.model.Project;
 import de.telran.businesstracker.model.User;
-import de.telran.businesstracker.repositories.ProjectRepository;
-import de.telran.businesstracker.repositories.UserRepository;
+import de.telran.businesstracker.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +29,12 @@ class ProjectServiceTest {
 
     @Mock
     UserRepository userRepository;
+    @Mock
+    MemberRepository memberRepository;
+    @Mock
+    RoadmapRepository roadmapRepository;
+    @Mock
+    MilestoneRepository milestoneRepository;
 
     @InjectMocks
     ProjectService projectService;
@@ -45,8 +48,12 @@ class ProjectServiceTest {
 
     @Test
     public void testAdd_success() {
+        User user2 = User.builder().id(2L).build();
+        User user3 = User.builder().id(3L).build();
 
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(userRepository.findById(user2.getId())).thenReturn(Optional.of(user2));
+        when(userRepository.findById(user3.getId())).thenReturn(Optional.of(user3));
 
         Project project = Project.builder()
                 .id(1L)
@@ -54,9 +61,16 @@ class ProjectServiceTest {
                 .user(user)
                 .build();
 
-        projectService.add(project.getName(), project.getUser().getId());
+        projectService.add(project.getName(), List.of(user2.getId(), user3.getId()));
 
-        verify(projectRepository, times(1)).save(any());
+        verify(userRepository, times(1)).findById(1L);
+        verify(userRepository, times(1)).findById(2L);
+        verify(userRepository, times(1)).findById(3L);
+
+        verify(memberRepository, times(1)).saveAll(anyList());
+        verify(roadmapRepository, times(1)).save(argThat(argument -> argument.getName().equals("Roadmap")));
+        verify(milestoneRepository, times(1)).saveAll(anyList());
+
         verify(projectRepository, times(1))
                 .save(argThat(savedProject -> savedProject.getName().equals(project.getName()) &&
                         savedProject.getUser().getId().equals(user.getId()))
@@ -72,7 +86,7 @@ class ProjectServiceTest {
                 .build();
 
         Exception exception = assertThrows(EntityNotFoundException.class, () ->
-                projectService.add(project.getName(), project.getUser().getId() + 2));
+                projectService.add(project.getName(), List.of(1L, 2L)));
 
         verify(userRepository, times(1)).findById(any());
         assertEquals("Error! This user doesn't exist in our DB", exception.getMessage());
@@ -162,9 +176,6 @@ class ProjectServiceTest {
 
     }
 
-    @Captor
-    ArgumentCaptor<Project> taskArgumentCaptor;
-
     @Test
     void removeById_oneObjectDeleted() {
         Project project = Project.builder()
@@ -173,13 +184,10 @@ class ProjectServiceTest {
                 .user(user)
                 .build();
 
-        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-
-        projectService.add(project.getName(), project.getUser().getId());
+        when(projectRepository.findById(1L)).thenReturn(Optional.of(project));
         projectService.removeById(project.getId());
 
-        List<Project> capturedProjects = taskArgumentCaptor.getAllValues();
-        verify(projectRepository, times(1)).deleteById(project.getId());
-        assertEquals(0, capturedProjects.size());
+        verify(projectRepository, times(1)).findById(1L);
+        verify(projectRepository, times(1)).delete(project);
     }
 }

@@ -7,13 +7,10 @@ import de.telran.businesstracker.service.ResourceService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,12 +28,10 @@ public class ResourceController {
 
     @Operation(summary = "add new resource")
     @PostMapping("")
-    public ResponseEntity<ResourceDto> createResource(@RequestBody @Valid ResourceDto resourceDto) throws URISyntaxException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResourceDto createResource(@RequestBody @Valid ResourceDto resourceDto) {
         Resource resource = resourceService.add(resourceDto.name, resourceDto.hours, resourceDto.cost, resourceDto.taskId);
-        resourceDto.id = resource.getId();
-        return ResponseEntity
-                .created(new URI("/api/resource/" + resource.getId()))
-                .body(resourceDto);
+        return resourceMapper.toDto(resource);
     }
 
     @Hidden

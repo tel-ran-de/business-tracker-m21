@@ -56,7 +56,7 @@ class MemberServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        memberService.add(member.getUser().getPosition(), member.getProject().getId(), member.getUser().getId());
+        memberService.add(member.getProject().getId(), member.getUser().getId());
 
         verify(memberRepository, times(1)).save(any());
         verify(memberRepository, times(1)).save(argThat(savedMember ->
@@ -69,7 +69,7 @@ class MemberServiceTest {
     @Test
     public void testAdd_projectDoesNotExist_EntityNotFoundException() {
         Exception exception = assertThrows(EntityNotFoundException.class, () ->
-                memberService.add(member.getUser().getPosition(), member.getProject().getId() + 100, member.getUser().getId()));
+                memberService.add(100L, member.getUser().getId()));
 
         verify(projectRepository, times(1)).findById(any());
         assertEquals("Error! This project doesn't exist in our DB", exception.getMessage());
@@ -136,7 +136,7 @@ class MemberServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        memberService.add(member.getUser().getPosition(), member.getProject().getId(), member.getUser().getId());
+        memberService.add(member.getProject().getId(), member.getUser().getId());
         memberService.removeById(member.getId());
 
         List<Member> capturedMembers = taskArgumentCaptor.getAllValues();
