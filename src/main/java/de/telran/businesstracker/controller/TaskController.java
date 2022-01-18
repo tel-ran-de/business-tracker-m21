@@ -54,7 +54,7 @@ public class TaskController {
         taskService.edit(taskDto.id, taskDto.name, taskDto.finished, taskDto.active, taskDto.delivery);
     }
 
-    @Operation(summary = "get list of active tasks by roadmap id")
+    @Operation(summary = "get list of active tasks by project id")
     @GetMapping("project/{id}/active")
     public List<TaskDto> getAllActiveTasksByProjectId(@PathVariable long id) {
         return taskService.getAllActiveTasksByProjectId(id)
@@ -65,7 +65,7 @@ public class TaskController {
 
     @Operation(summary = "get list of tasks by milestone id")
     @GetMapping("milestone/{id}")
-    public List<TaskDto> getAllTasksByProjectId(@PathVariable long id) {
+    public List<TaskDto> getAllTasksByMileStoneId(@PathVariable long id) {
         return taskService.getAllByMileStoneId(id)
                 .stream()
                 .map(taskMapper::toDto)
