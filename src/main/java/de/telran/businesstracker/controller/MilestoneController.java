@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/milestones")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class MilestoneController {
 
     private final MilestoneService milestoneService;

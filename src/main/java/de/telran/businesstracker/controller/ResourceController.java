@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/resources")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class ResourceController {
 
     private final ResourceService resourceService;

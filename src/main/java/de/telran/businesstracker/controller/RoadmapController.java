@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/roadmaps")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class RoadmapController {
 
     private final RoadmapService roadmapService;
@@ -45,6 +46,7 @@ public class RoadmapController {
     public void updateRoadmap(@RequestBody @Valid RoadmapDto roadmapDto) throws HttpClientErrorException.BadRequest {
         roadmapService.edit(roadmapDto.id, roadmapDto.name, roadmapDto.startDate);
     }
+
     @Operation(summary = "get list of roadmaps by project id")
     @GetMapping("project/{id}")
     public List<RoadmapDto> getAllRoadmapsByProjectId(@PathVariable long id) {

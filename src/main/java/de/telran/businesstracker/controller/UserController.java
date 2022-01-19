@@ -4,7 +4,6 @@ import de.telran.businesstracker.controller.dto.UserDto;
 import de.telran.businesstracker.mapper.UserMapper;
 import de.telran.businesstracker.model.User;
 import de.telran.businesstracker.service.UserService;
-import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class UserController {
 
     private final UserService userService;

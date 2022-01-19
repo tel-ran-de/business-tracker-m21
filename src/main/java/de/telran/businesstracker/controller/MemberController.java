@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/members")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class MemberController {
 
     public final MemberService memberService;
