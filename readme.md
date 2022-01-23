@@ -7,3 +7,4 @@ the http://localhost:8080/swagger-ui.html page in your browser
 -Inna
 -Anzhela
 -Vitalij
+-Valeryia
