@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import Navigation from "./components/Navigation";
+import Navigation from "./components/Navigation/Navigation";
 import RouterSwitch from "./components/Navigation/RouterSwitch";
 
 
