@@ -6,11 +6,12 @@ import RouterSwitch from "./components/Navigation/RouterSwitch";
 
 function App() {
     return (
-
-        <div className="container">
+        <>
             <Navigation/>
-            <RouterSwitch/>
-        </div>
+            <div className="container">
+                <RouterSwitch/>
+            </div>
+        </>
     )
 }
 
