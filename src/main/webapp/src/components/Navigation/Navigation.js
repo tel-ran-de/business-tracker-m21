@@ -19,9 +19,12 @@ const Navigation = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/about">About</NavLink>
                         </li>
+<<<<<<< HEAD
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/add-task">Add Task</NavLink>
                         </li>
+=======
+>>>>>>> 4c34d156413d7ecc9b1121313e9c3fef3f02ff9d
                     </ul>
                 </div>
             </div>
