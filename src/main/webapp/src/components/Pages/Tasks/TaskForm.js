@@ -49,10 +49,10 @@ export default props => {
                                onChange={onChangeFieldHandler}
                         />
                     </div>
-                    <div class="col-6">
-                    <div class="mb-3">
-                        <div class="mb-2">Status</div>
-                        <div class="btn-group d-flex">
+                    <div className="col-6">
+                    <div className="mb-3">
+                        <div className="mb-2">Status</div>
+                        <div className="btn-group d-flex">
 
                             <button className="btn w-50 btn-outline-dark" type="button">todo</button>
                             <button className="btn w-50 btn-outline-dark" type="button">active</button>
