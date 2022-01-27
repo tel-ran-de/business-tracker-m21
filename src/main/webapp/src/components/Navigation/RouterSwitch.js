@@ -8,7 +8,7 @@ export default (props) => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Projects/>}/>
+                <Route path="/projects" element={<Projects/>}/>
                 <Route path="/about" element={<About/>}/>
             </Routes>
         </>
