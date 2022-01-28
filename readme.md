@@ -1,11 +1,11 @@
-# Docker
+#Docker
 
-To start PostgresSQL with docker run the command:
+Run PostgreSQL using Docker: 
 ```ssh
 cd postgres
 docker-compose up
 ```
-> PostgresSQL running at port <b>5440</b>
+> PostgreSQL port: <b>5440</b>
 
 ```
 ... src/main/resourcesapplication.properties
