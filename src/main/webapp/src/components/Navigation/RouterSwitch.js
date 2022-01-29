@@ -9,7 +9,7 @@ export default (props) => {
     return (
         <>
             <Routes>
-                <Route path="/project-detail" element={<ProjectDetail/>}/>
+                <Route path="/projects/:id" element={<ProjectDetail/>}/>
                 <Route path="/about" element={<About/>}/>
             </Routes>
         </>
