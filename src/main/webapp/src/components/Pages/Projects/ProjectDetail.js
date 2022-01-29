@@ -1,10 +1,8 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react'
 
 import {Link} from "react-router-dom";
 
 export default props => {
-
 
     return (
         <div className="row">
@@ -19,7 +17,6 @@ export default props => {
             <div className="mb-3">
                 <h3>Members</h3>
                 <div className="d-flex flex-row justify-content-start">
-
                 </div>
             </div>
             <div className="d-flex justify-content-between text-center">
@@ -33,9 +30,7 @@ export default props => {
                     <h3>KPI</h3>
                 </div>
             </div>
-
         </div>
-
     )
 }
 
