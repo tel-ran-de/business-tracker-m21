@@ -17,6 +17,7 @@ export default props => {
             <div className="mb-3">
                 <h3>Members</h3>
                 <div className="d-flex flex-row justify-content-start">
+
                 </div>
             </div>
             <div className="d-flex justify-content-between text-center">
