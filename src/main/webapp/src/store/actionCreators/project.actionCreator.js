@@ -10,10 +10,10 @@ export const getProjectById = projectId => {
     return async dispatch => {
         try {
             const res = await fetch(`${API_URL}/api/projects/${projectId}`)
-            const data = await res.json()
             if (res.status !== 200) {
                 return console.log(data.message)
             }
+            const data = await res.json()
             dispatch(fetchProjectById(data))
         } catch (e) {
             console.log(e.message)
