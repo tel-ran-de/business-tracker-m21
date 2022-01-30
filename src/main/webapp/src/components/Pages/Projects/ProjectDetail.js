@@ -29,7 +29,7 @@ export default props => {
         <div className="row">
             <div className="d-flex flex-row bd-highlight align-items-center mb-3">
                 <div>
-                    <Link className="btn btn-sm btn-info" to="/about">Back</Link>
+                    <Link className="btn btn-sm btn-info" to="/projects">Back</Link>
                 </div>
                 <div className="w-100 text-center">
                     <h2>Project: {project.name}</h2>
