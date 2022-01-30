@@ -3,26 +3,37 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 
 import {Link} from "react-router-dom";
+import {getProjectById} from "../../../store/actionCreators/project.actionCreator";
+
 import MemberDetail from "../Members/MemberDetail";
 import {getMemberByProjectId} from "../../../store/actionCreators/member.actionCreator";
-import {getProjectById} from "../../../store/actionCreators/project.actionCreator";
+import ActiveTasksDetail from "../Tasks/ActiveTasksDetail";
+import {getActiveTaskByProjectId} from "../../../store/actionCreators/task.actionCreator";
 
 export default props => {
 
     const dispatch = useDispatch()
     const {projectId} = useParams()
     const members = useSelector(state => state.member.list)
+    const activeTasks = useSelector(state => state.task.activeTasks)
     const project = useSelector(state => state.project.list)
 
     useEffect(() => {
         dispatch(getProjectById(projectId))
         dispatch(getMemberByProjectId(projectId))
+        dispatch(getActiveTaskByProjectId(projectId))
     }, [])
 
     const renderMemberList = () => {
         return !members.length
             ? (<p className="alert alert-warning">No Members selected</p>)
             : members.map(c => <MemberDetail key={c.id} member={c}/>)
+    }
+
+    const renderActiveTasks = () => {
+        return !activeTasks.length
+            ? (<p className="alert alert-warning">No Tasks to show</p>)
+            : activeTasks.map(a => <ActiveTasksDetail key={a.id} activeTask={a}/>)
     }
 
     return (
@@ -47,6 +58,9 @@ export default props => {
                 </div>
                 <div className="card col-4">
                     <h3>Current active tasks</h3>
+                    <ul className="list-group">
+                        {renderActiveTasks()}
+                    </ul>
                 </div>
                 <div className="card col-4">
                     <h3>KPI</h3>
