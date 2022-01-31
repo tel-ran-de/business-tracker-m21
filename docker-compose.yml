@@ -1,9 +1,7 @@
 version: "3.9"
 services:
   app:
-    image: "business-tracker-backend:latest"
-    build:
-      context: .
+    image: "ar1988/bt-backend:latest"
     container_name: bt-backend
     depends_on:
       - db
