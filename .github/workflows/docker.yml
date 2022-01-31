@@ -2,7 +2,7 @@ name: CI to Docker Hub
 
 on:
   push:
-    branches: [ docker-ci ]
+    branches: [ master ]
 
 jobs:
   build:
