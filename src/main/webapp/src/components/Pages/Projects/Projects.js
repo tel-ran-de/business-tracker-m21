@@ -38,7 +38,7 @@ const Projects = () => {
                     return (
                         <tr key={key}>
                             <td className="m-1 p-2">
-                                <NavLink className="nav-link" to={"/host/projects/" + val.id}>{val.name}</NavLink>
+                                <NavLink className="nav-link" to={"/projects/" + val.id}>{val.name}</NavLink>
                             </td>
                         </tr>
                     )
