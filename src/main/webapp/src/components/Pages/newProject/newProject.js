@@ -11,13 +11,13 @@ import React, {useEffect, useState} from 'react';
 export default function NewProject(props) {
     return (
         <form>
-            <div className="form-group">
+            <div className="p-1 form-group">
                 <label htmlFor="exampleFormControlInput1">Project Name</label>
                 <input type="email" className="form-control" id="exampleFormControlInput1"
                        placeholder="SpaceX Launch"/>
             </div>
 
-            <div className="form-group">
+            <div className="p-1 form-group">
                 <label htmlFor="exampleFormControlSelect2">Select Project Members</label>
                 <select multiple className="form-control" id="exampleFormControlSelect2">
                     <option>Elon Mask</option>
@@ -30,7 +30,7 @@ export default function NewProject(props) {
             </div>
             <div className="button">
                 <input className="btn btn-primary" type="submit" value="Cancel"/>
-                <input className="btn btn-primary" type="submit" value="Submit"/>
+                <input className="btn  btn-primary" type="submit" value="Submit"/>
             </div>
         </form>
 
