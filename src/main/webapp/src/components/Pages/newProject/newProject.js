@@ -28,9 +28,9 @@ export default function NewProject(props) {
                     <option>Random Person</option>
                 </select>
             </div>
-            <div className="button">
-                <input className="btn btn-primary" type="submit" value="Cancel"/>
-                <input className="btn  btn-primary" type="submit" value="Submit"/>
+            <div className="d-grid gap-1 d-md-flex justify-content-md-start button">
+                <input className="btn btn-secondary" type="button" value="Cancel"/>
+                <input className="btn btn-primary" type="button" value="Submit"/>
             </div>
         </form>
 
