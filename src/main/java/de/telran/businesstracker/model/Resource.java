@@ -25,7 +25,7 @@ public class Resource {
     @Setter
     private Double cost;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Task task;
 
     public Resource(String name, Integer hours, Double cost, Task task) {

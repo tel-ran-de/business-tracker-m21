@@ -27,7 +27,7 @@ public class Milestone {
     private LocalDate finishDate;
 
     @Setter
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Roadmap roadmap;
 
     @Setter
