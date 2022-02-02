@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {NavLink} from "react-router-dom";
 import {API_URL} from '../../constants/global'
 
@@ -26,13 +26,13 @@ const Projects = () => {
     const removeProject = projectId => {
         return async () => {
             try {
-                await fetch(`${API_URL}/api/projects/${projectId}`, {
+                const res =  await fetch(`${API_URL}/api/projects/${projectId}`, {
                     method: 'DELETE'
                 })
             } catch (e) {
                 console.log(e.message)
             }
-            window.location.reload(false)
+            // window.location.reload(false)
         }
     }
 
