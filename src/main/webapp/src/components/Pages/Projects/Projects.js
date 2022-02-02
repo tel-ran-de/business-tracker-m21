@@ -24,15 +24,18 @@ const Projects = () => {
     }, [])
 
     const removeProject = projectId => {
+
         return async () => {
             try {
-                await fetch(`${API_URL}/api/projects/${projectId}`, {
+                const res = await fetch(`${API_URL}/api/projects/${projectId}`, {
                     method: 'DELETE'
                 })
+                if (res.status === 204) {
+                    setProjects(projects.filter(p => p.id !== projectId))
+                }
             } catch (e) {
                 console.log(e.message)
             }
-            window.location.reload(false)
         }
     }
 
@@ -54,9 +57,7 @@ const Projects = () => {
                                     <NavLink className="nav-link" to={"/projects/" + val.id}>
                                         <div>
                                             {val.name}
-
                                         </div>
-
                                     </NavLink>
                                     <button
                                         onClick={removeProject(val.id)}
@@ -64,7 +65,6 @@ const Projects = () => {
                                     >Remove
                                     </button>
                                 </div>
-
                             </td>
                         </tr>
                     )
