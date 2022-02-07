@@ -12,3 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.error404 {
+  padding-top:200px ;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+  color: black;
+}
