@@ -30,7 +30,7 @@ const Projects = () => {
                 const res = await fetch(`${API_URL}/api/projects/${projectId}`, {
                     method: 'DELETE'
                 })
-                if (res.status === 204) {
+                if (res.status >= 200 || res.status < 300) {
                     setProjects(projects.filter(p => p.id !== projectId))
                 }
             } catch (e) {
