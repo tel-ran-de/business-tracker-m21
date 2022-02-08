@@ -10,9 +10,6 @@ export const getActiveTaskByProjectId = projectId => {
         try {
             const res = await fetch(`${API_URL}/api/tasks/project/${projectId}/active`)
             const data = await res.json()
-            if (res.status !== 200) {
-                return console.log(data.message)
-            }
             dispatch(fetchActiveTaskByProjectId(data))
         } catch (e) {
             console.log(e.message)

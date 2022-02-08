@@ -24,18 +24,18 @@ export default props => {
                     type="checkbox"
                     name="userIds"
                     value={u.id}
-                    onClick={onCheckMember}
+                    onChange={onCheckMember}
                 />
                 {u.name} {u.lastName} ({u.position})
             </li>)
     }
 
     const onCheckMember = e => {
-        const members = formData.userIds
-        let ind
+        const members = [...formData.userIds]
         if (e.target.checked) {
             members.push(+e.target.value)
         } else {
+            let ind
             ind = members.indexOf(+e.target.value)
             members.splice(ind, 1)
         }
@@ -46,12 +46,12 @@ export default props => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const onSubmitForm = e => {
+    const onSubmitForm = async e => {
         e.preventDefault()
         if (props.mode === 'edit') {
             // dispatch(changeProject(formData))
         } else if (props.mode === 'add') {
-            dispatch(addNewProject(formData))
+            await dispatch (addNewProject(formData))
             navigate('/projects')
         }
     }
@@ -79,7 +79,7 @@ export default props => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="members" className="form-label">Select project members</label>
-                    <ul class="col-md-4 overflow-auto" style={{height: '300px'}}>
+                    <ul className="col-md-4 overflow-auto" style={{height: '300px'}}>
                         {renderUsersList()}
                     </ul>
                 </div>
