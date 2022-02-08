@@ -10,9 +10,6 @@ export const getMemberByProjectId = projectId => {
         try {
             const res = await fetch(`${API_URL}/api/members/project/${projectId}`)
             const data = await res.json()
-            if (res.status !== 200) {
-                return console.log(data.message)
-            }
             dispatch(fetchMemberByProjectId(data))
         } catch (e) {
             console.log(e.message)

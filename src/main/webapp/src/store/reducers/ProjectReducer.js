@@ -5,14 +5,15 @@ import {
 
 const initState = {
     list: [],
+    activeProject: null
 }
 
 export const ProjectReducer = (state = initState, {type, payload}) => {
     switch (type) {
         case FETCH_PROJECT_BY_ID:
-            return {...state, list: payload}
+            return {...state, activeProject: payload}
         case ADD_PROJECT:
-            return {...state, list: payload}
+            return {...state, list: [...state.list, payload]}
         default:
             return state
     }
