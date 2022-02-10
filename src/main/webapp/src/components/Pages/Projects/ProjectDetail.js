@@ -18,7 +18,7 @@ export default () => {
     const {projectId} = useParams()
     const members = useSelector(state => state.member.list)
     const activeTasks = useSelector(state => state.task.activeTasks)
-    const project = useSelector(state => state.project.list)
+    const project = useSelector(state => state.project.activeProject)
     const kpis = useSelector(state => state.kpi.list)
 
 
@@ -48,7 +48,7 @@ export default () => {
             : kpis.map(k => <KpiDetail key={k.id} kpi={k}/>)
     }
 
-    return (
+    return project ? (
         <div className="row">
             <div className="d-flex flex-row bd-highlight align-items-center mb-3">
                 <div>
@@ -82,6 +82,6 @@ export default () => {
                 </div>
             </div>
         </div>
-    )
+    ) : (<div>Loading...</div>)
 }
 

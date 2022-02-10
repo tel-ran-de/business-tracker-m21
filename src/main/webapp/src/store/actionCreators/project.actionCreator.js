@@ -11,9 +11,6 @@ export const getProjectById = projectId => {
         try {
             const res = await fetch(`${API_URL}/api/projects/${projectId}`)
             const data = await res.json()
-            if (res.status !== 200) {
-                return console.log(data.message)
-            }
             dispatch(fetchProjectById(data))
         } catch (e) {
             console.log(e.message)
@@ -33,9 +30,6 @@ export const addNewProject = project => {
                 }
             })
             const data = await res.json()
-            if (res.status !== 200) {
-                return console.log(data.message)
-            }
             dispatch(addProject(data))
         } catch (e) {
             console.log(e.message)
