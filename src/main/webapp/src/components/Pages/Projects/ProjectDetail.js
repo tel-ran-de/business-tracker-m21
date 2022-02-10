@@ -9,19 +9,25 @@ import MemberDetail from "../Members/MemberDetail";
 import {getMemberByProjectId} from "../../../store/actionCreators/member.actionCreator";
 import ActiveTasksDetail from "../Tasks/ActiveTasksDetail";
 import {getActiveTaskByProjectId} from "../../../store/actionCreators/task.actionCreator";
+import {getKpiByProjectId} from "../../../store/actionCreators/kpi.actionCreator";
+import KpiDetail from "../Kpi/KpiDetail";
 
-export default props => {
+export default () => {
 
     const dispatch = useDispatch()
     const {projectId} = useParams()
     const members = useSelector(state => state.member.list)
     const activeTasks = useSelector(state => state.task.activeTasks)
     const project = useSelector(state => state.project.list)
+    const kpis = useSelector(state => state.kpi.list)
+
 
     useEffect(() => {
         dispatch(getProjectById(projectId))
         dispatch(getMemberByProjectId(projectId))
+        dispatch(getKpiByProjectId(projectId))
         dispatch(getActiveTaskByProjectId(projectId))
+
     }, [])
 
     const renderMemberList = () => {
@@ -34,6 +40,12 @@ export default props => {
         return !activeTasks.length
             ? (<p className="alert alert-warning">No Tasks to show</p>)
             : activeTasks.map(a => <ActiveTasksDetail key={a.id} activeTask={a}/>)
+    }
+
+    const renderKpi = () => {
+        return !kpis.length
+            ? (<p className="alert alert-warning">No KPI to show</p>)
+            : kpis.map(k => <KpiDetail key={k.id} kpi={k}/>)
     }
 
     return (
@@ -64,6 +76,9 @@ export default props => {
                 </div>
                 <div className="card col-4">
                     <h3>KPI</h3>
+                    <ul className="list-group">
+                        {renderKpi()}
+                    </ul>
                 </div>
             </div>
         </div>
