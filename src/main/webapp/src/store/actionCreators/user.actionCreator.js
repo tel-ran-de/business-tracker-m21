@@ -3,7 +3,7 @@ import {
 
 } from "../actions";
 
-import {API_URL} from '../../components/constants/global'
+import {API_URL} from '../../store/lib/vars'
 
 export const getAllUsers = () => {
     return async dispatch => {

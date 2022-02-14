@@ -1,5 +1,6 @@
 //Projects actions
 export const FETCH_PROJECT_BY_ID = 'FETCH_PROJECT_BY_ID'
+export const FETCH_ALL_PROJECTS = 'FETCH_ALL_PROJECTS'
 export const ADD_PROJECT = 'ADD_PROJECT'
 
 //Users actions

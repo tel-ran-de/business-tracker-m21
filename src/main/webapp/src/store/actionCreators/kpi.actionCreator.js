@@ -3,7 +3,7 @@ import {
 
 } from "../actions";
 
-import {API_URL} from '../../components/constants/global'
+import {API_URL} from '../lib/vars'
 
 export const getKpiByProjectId = projectId => {
     return async dispatch => {
