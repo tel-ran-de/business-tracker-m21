@@ -10,9 +10,6 @@ export const getKpiByProjectId = projectId => {
         try {
             const res = await fetch(`${API_URL}/api/project/${projectId}/kpis`)
             const data = await res.json()
-            if (res.status !== 200) {
-                return console.log(data.message)
-            }
             dispatch(fetchKpiByProjectId(data))
         } catch (e) {
             console.log(e.message)

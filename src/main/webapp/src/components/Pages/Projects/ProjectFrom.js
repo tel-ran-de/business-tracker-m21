@@ -31,14 +31,9 @@ export default props => {
     }
 
     const onCheckMember = e => {
-        const members = formData.userIds
-        let ind
-        if (e.target.checked) {
-            members.push(+e.target.value)
-        } else {
-            ind = members.indexOf(+e.target.value)
-            members.splice(ind, 1)
-        }
+        const members = e.target.checked ?
+            [...formData.userIds, +e.target.value] :
+            formData.userIds.filter(m => m !== +e.target.value)
         setFormData({...formData, userIds: members})
     }
 
@@ -49,7 +44,7 @@ export default props => {
     const onSubmitForm = e => {
         e.preventDefault()
         if (props.mode === 'edit') {
-            // dispatch(changeProject(formData))
+
         } else if (props.mode === 'add') {
             dispatch(addNewProject(formData))
             navigate('/projects')
@@ -79,7 +74,7 @@ export default props => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="members" className="form-label">Select project members</label>
-                    <ul class="col-md-4 overflow-auto" style={{height: '300px'}}>
+                    <ul className="col-md-4 overflow-auto" style={{height: '300px'}}>
                         {renderUsersList()}
                     </ul>
                 </div>
