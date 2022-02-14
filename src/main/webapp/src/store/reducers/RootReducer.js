@@ -7,6 +7,7 @@ import {KpiReducer} from "./KpiReducer";
 
 
 export const RootReducer = combineReducers({
+    projects: ProjectReducer,
     project: ProjectReducer,
     member: MemberReducer,
     task: TaskReducer,

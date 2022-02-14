@@ -1,24 +1,27 @@
 import React, {useState, useEffect} from 'react'
 import {NavLink} from "react-router-dom";
-import {API_URL} from '../../constants/global'
+import {useDispatch, useSelector} from "react-redux";
+import {getAllProjects} from "../../../store/actionCreators/project.actionCreator"
 
-const Projects = () => {
+import {API_URL} from '../../../store/lib/vars'
 
+export const Projects = () => {
+
+    const dispatch = useDispatch();
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [projects, setProjects] = useState([]);
+    const projects = useSelector(state => state.projects.list)
+
 
     useEffect(() => {
-        fetch(API_URL + "/api/projects")
-            .then(res => res.json())
+        dispatch(getAllProjects())
             .then(
-                (data) => {
-                    setIsLoaded(true);
-                    setProjects(data);
+                () => {
+                    setIsLoaded(true)
                 },
                 (error) => {
-                    setIsLoaded(true);
-                    setError(error);
+                    setIsLoaded(true)
+                    setError(error)
                 }
             )
     }, [])
@@ -31,7 +34,7 @@ const Projects = () => {
                     method: 'DELETE'
                 })
                 if (res.status >= 200 || res.status < 300) {
-                    setProjects(projects.filter(p => p.id !== projectId))
+                    projects.filter(p => p.id !== projectId)
                 }
             } catch (e) {
                 console.log(e.message)
